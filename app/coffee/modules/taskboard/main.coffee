@@ -782,7 +782,7 @@ TaskboardSquishColumnDirective = (rs) ->
         refreshTaskboardTableWidth = () =>
             columnWidths = []
 
-            columns = $el.find(".task-colum-name")
+            columns = $el.find(".taskboard-table-header .task-colum-name")
 
             columnWidths = _.map columns, (column) ->
                 return $(column).outerWidth(true)
