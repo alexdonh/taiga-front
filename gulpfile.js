@@ -4,7 +4,7 @@ var gulp = require("gulp"),
     jade = require("gulp-jade"),
     coffee = require("gulp-coffee"),
     concat = require("gulp-concat"),
-    uglify = require("gulp-uglify"),
+    uglify = require("gulp-uglify/composer")(require("uglify-es"), console),
     plumber = require("gulp-plumber"),
     wrap = require("gulp-wrap"),
     rename = require("gulp-rename"),
@@ -14,7 +14,7 @@ var gulp = require("gulp"),
     sass = require("gulp-sass"),
     csslint = require("gulp-csslint"),
     minifyCSS = require("gulp-minify-css"),
-    scsslint = require("gulp-scss-lint"),
+    scsslint = require("gulp-sass-lint"),
     cache = require("gulp-cache"),
     cached = require("gulp-cached"),
     jadeInheritance = require("gulp-jade-inheritance"),
@@ -274,15 +274,15 @@ gulp.task("scss-lint", [], function() {
     return gulp.src(sassFiles)
         .pipe(gulpif(!isDeploy, cache(scsslint({endless: true, sync: true, config: ".scss-lint.yml"}), {
           success: function(scsslintFile) {
-            return scsslintFile.scsslint.success;
+            return scsslintFile.sassLint.length > 0 && scsslintFile.sassLint[0].errorCount === 0;
           },
           value: function(scsslintFile) {
             return {
-              scsslint: scsslintFile.scsslint
+              scsslint: scsslintFile.sassLint
             };
           }
         })))
-        .pipe(gulpif(fail, scsslint.failReporter()));
+        .pipe(gulpif(fail, scsslint.failOnError()));
 });
 
 gulp.task("clear-sass-cache", function() {
@@ -307,6 +307,8 @@ gulp.task("sass-compile", [], function() {
 gulp.task("css-lint-app", function() {
     var cssFiles = paths.css.concat(themes.current.customCss);
 
+    var fail = process.argv.indexOf("--fail") !== -1;
+
     return gulp.src(cssFiles)
         .pipe(gulpif(!isDeploy, cache(csslint("csslintrc.json"), {
           success: function(csslintFile) {
@@ -322,7 +324,7 @@ gulp.task("css-lint-app", function() {
             };
           }
         })))
-        .pipe(csslint.reporter());
+        .pipe(gulpif(fail, csslint.formatter("fail")));
 });
 
 gulp.task("app-css", function() {
@@ -655,7 +657,7 @@ gulp.task("link-images", ["copy-images"], function(cb) {
         fs.unlinkSync(paths.dist+"images");
     } catch (exception) {
     }
-    fs.symlinkSync("./"+version+"/images", paths.dist+"images");
+    fs.symlinkSync("./"+version+"/images", paths.dist+"images", "dir");
     cb();
 });
 
