@@ -115,7 +115,7 @@
     "checksley": "git+https://github.com/jespino/checksley-bower.git",
     "dom-autoscroller": "^2.3.4",
     "dragula": "^3.7.2",
-    "flot": "^2.2.1",
+    "flot": "0.8.3",
     "flot-axislabels": "^1.0.0",
     "gulp-class-prefix": "^1.0.1",
     "immutable": "^4.0.0-rc.12",
