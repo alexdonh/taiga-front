@@ -30,8 +30,8 @@ FilterSlideDownDirective = () ->
 
                 filter.children().each () ->
                     contentHeight += $(this).outerHeight(true)
-
-                $(el.context.nextSibling)
+                console.log el
+                $(el).next()
                     .css({
                         "display": "block"
                     })
