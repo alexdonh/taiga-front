@@ -793,7 +793,7 @@ TaskboardSquishColumnDirective = (rs) ->
             $el.find('.taskboard-table-inner').css("width", totalWidth)
 
             issuesBoxWidth = $el.find('.issues-row .taskboard-row-title-box').outerWidth(true)
-            $el.find('.issues-row').css("width", totalWidth - columnWidths.pop())
+            $el.find('.issues-row').css("width", totalWidth)
 
             issueCardMaxWidth = if $scope.ctrl.zoomLevel == '0' then 128 else 280
             $el.find('.issues-row .taskboard-cards-box .card').css("max-width", issueCardMaxWidth)
