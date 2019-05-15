@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+## 4.2.5 (2019-05-09)
+- Revet remove bluebird dependency
+
+## 4.2.4 (2019-05-09)
+
+- Fix moment local for Chinese
+- Multiple minor fixes
+- Remove bluebird dependency
+
+## 4.2.3 (2019-04-16)
+
+- Enable hiding list items on Dashboard
+- Minor fixes.
+
+## 4.2.3 (2019-03-21)
+
 ## 4.2.1 (2019-03-20)
 
 - Add user stories dashboard filter
